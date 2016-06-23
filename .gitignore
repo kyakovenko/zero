@@ -1,6 +1,6 @@
 .idea/
 .vagrant/
 
-local_setting.py
+local_settings.py
 
 *.pyc
