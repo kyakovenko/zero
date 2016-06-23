@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
-from slackbot.bot import respond_to
 from slackbot.bot import listen_to
+from slackbot.bot import respond_to
 
 from sensors.db.session import DBSession
 from sensors.db.models import RoomMetrics
@@ -32,7 +32,10 @@ def love(message):
 def data(message):
     session = DBSession()
     last_metric = session.query(RoomMetrics).order_by(RoomMetrics.appended.desc()).first()
-    message.reply("Temperature: {0} *C \nHumidity:     {1} %".format(last_metric.temperature, last_metric.humidity))
+    if last_metric:
+        message.reply("Temperature: {0} *C \nHumidity:     {1} %".format(last_metric.temperature, last_metric.humidity))
+    else:
+        message.reply("There is no data.")
 
 
 @respond_to(u'(where are you\?|^detect_place$)', re.IGNORECASE)
