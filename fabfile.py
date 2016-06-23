@@ -70,6 +70,7 @@ def update_supervisor():
 @task
 def deploy():
     install_packages()
+    install_wiring_pi()
     install_python_env()
     upload()
     #install_mysql()
