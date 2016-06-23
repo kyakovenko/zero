@@ -4,6 +4,7 @@ __email__ = 'kirill.yakovenko@gmail.com'
 
 import os
 from fabric.api import task, sudo, run, cd, settings, env, prefix, put
+from fabric.contrib.files import upload_template
 from fabric.contrib.project import rsync_project
 
 env.setdefault('destination', '/srv/')
@@ -22,7 +23,7 @@ def install_mysql():
 @task
 def install_packages():
     sudo('apt-get update')
-    sudo('apt-get install -y git virtualenv build-essential python-dev')
+    sudo('apt-get install -y git virtualenv build-essential python-dev supervisor')
 
 
 @task
@@ -53,11 +54,25 @@ def upload():
 
 
 @task
+def update_supervisor():
+    upload_template(
+        'configs/zero.conf',
+        '/etc/supervisor/conf.d/zero.conf',
+        use_jinja=True, mode='0600', use_sudo=True,
+        context={
+            'path': os.path.normpath(env.destination),
+            'app_path': os.path.join(env.destination, 'zero')
+        }
+    )
+    sudo('supervisorctl update')
+
+
+@task
 def deploy():
     install_packages()
     install_python_env()
     upload()
     #install_mysql()
-    #install_supervisor()
+    update_supervisor()
     #restart()
 
