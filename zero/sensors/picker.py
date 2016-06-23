@@ -1,9 +1,9 @@
 from db.session import session
 from db.models import RoomMetrics
 
-import dht11
+import dht
 import time
-dht11.wiringPiSetup()
+dht.wiringPiSetup()
 
 current_time = int(time.time())
 while (True):
@@ -11,7 +11,7 @@ while (True):
 	start_time = (current_time / 60) * 60
 	while current_time - start_time < 60:
 		try:
-			data_lst.append( dht11.read_dht11() )
+			data_lst.append( dht.read_dht11() )
 		except RuntimeError as exc:
 			pass #print exc
 		finally:
