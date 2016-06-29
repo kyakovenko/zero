@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+__author__ = 'Kirill Yakovenko'
+__email__ = 'kirill.yakovenko@gmail.com'
+
 import re
 
 from slackbot.bot import listen_to

@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+__author__ = 'Kirill Yakovenko'
+__email__ = 'kirill.yakovenko@gmail.com'
+
 from sqlalchemy import Column
 from sqlalchemy import types 
 from sqlalchemy.sql import func

@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+__author__ = 'Kirill Yakovenko'
+__email__ = 'kirill.yakovenko@gmail.com'
+
 from db.session import session
 from db.models import RoomMetrics
 
