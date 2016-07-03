@@ -7,7 +7,7 @@ import time
 
 from db.session import session
 from db.models import RoomMetrics
-from ..slackbot_settings import DHT11_PIN
+from zero.slackbot_settings import DHT11_PIN
 
 dht.wiringPiSetup()
 
