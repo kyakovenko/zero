@@ -2,11 +2,13 @@
 __author__ = 'Kirill Yakovenko'
 __email__ = 'kirill.yakovenko@gmail.com'
 
-from db.session import session
-from db.models import RoomMetrics
-
 import dht
 import time
+
+from db.session import session
+from db.models import RoomMetrics
+from ..slackbot_settings import DHT11_PIN
+
 dht.wiringPiSetup()
 
 current_time = int(time.time())
@@ -15,7 +17,7 @@ while (True):
 	start_time = (current_time / 60) * 60
 	while current_time - start_time < 60:
 		try:
-			data_lst.append( dht.read_dht11() )
+			data_lst.append( dht.read_dht11(pin=DHT11_PIN) )
 		except RuntimeError as exc:
 			pass #print exc
 		finally:

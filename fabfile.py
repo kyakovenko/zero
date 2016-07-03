@@ -68,6 +68,12 @@ def update_supervisor():
 
 
 @task
+def update():
+    upload()
+    sudo('supervisorctl restart all')
+
+
+@task
 def deploy():
     install_packages()
     install_wiring_pi()
