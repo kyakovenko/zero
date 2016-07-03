@@ -3,6 +3,7 @@ __author__ = 'Kirill Yakovenko'
 __email__ = 'kirill.yakovenko@gmail.com'
 
 import re
+from datetime import datetime, timedelta
 
 from slackbot.bot import listen_to
 from slackbot.bot import respond_to
@@ -34,9 +35,14 @@ def love(message):
 @respond_to('data', re.IGNORECASE)
 def data(message):
     session = DBSession()
-    last_metric = session.query(RoomMetrics).order_by(RoomMetrics.appended.desc()).first()
+    five_minute_ago = datetime.now() - timedelta(minutes=5)
+    last_metric = session.query(RoomMetrics)\
+                         .filter(RoomMetrics.appended > five_minute_ago)\
+                         .order_by(RoomMetrics.appended.desc()).first()
     if last_metric:
-        message.reply("Temperature: {0} *C \nHumidity:     {1} %".format(last_metric.temperature, last_metric.humidity))
+        message.reply("Temperature: {0} *C \nHumidity:     {1} %".format(
+            last_metric.temperature, last_metric.humidity)
+        )
     else:
         message.reply("There is no data.")
 
